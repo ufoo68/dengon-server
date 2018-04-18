@@ -1,10 +1,10 @@
-const express = require('express')
-const app = express()
+const WebSocket = require('ws')
 
-app.get('/item', function (req, res, next) {
-  res.json({msg: 'Something!'})
-})
+const wss = new WebSocket.Server({ port: 8080 })
 
-app.listen(8001, function () {
-  console.log('Express eb server listening on port 8001')
+wss.on('connection', (ws) => {
+  ws.on('message', (message) => {
+    console.log(`Received message => ${message}`)
+  })
+  ws.send('ho!')
 })
