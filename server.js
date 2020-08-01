@@ -1,10 +1,4 @@
-const WebSocket = require('ws')
-
-const wss = new WebSocket.Server({ port: 8080 })
-
-wss.on('connection', (ws) => {
-  ws.on('message', (message) => {
-    console.log(`Received message => ${message}`)
-    wss.emit(message, ws)
-  })
+var io = require('socket.io').listen(8080);
+io.sockets.on('connection', function (socket) {
+　
 })
