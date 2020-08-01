@@ -1,16 +1,16 @@
-var express = require('express');
-var app = express();
-var http = require('http').Server(app)
-const PORT = 3000
+var server = require("ws").Server;
+var s = new server({ port: 8080 });
 
-const io = require('socket.io').listen(http);
-io.sockets.on('connection', function (socket) {
-　socket.on('message',function(msg){
-        console.log('message: ' + msg);
-        io.emit('message', msg);
-    })
-})
+s.on("connection", function(ws) {
+  ws.on("message", function(message) {
+    console.log("Received: " + message);
 
-http.listen(PORT, function(){
-    console.log('server listening. Port:' + PORT);
-})
+    s.clients.forEach(function(client) {
+      client.send(message);
+    });
+  });
+
+  ws.on("close", function() {
+    console.log("I lost a client");
+  });
+});
