@@ -7,4 +7,5 @@ wss.on('connection', (ws) => {
     console.log(`Received message => ${message}`)
     ws.send(message)
   })
+  ws.send('test')
 })
